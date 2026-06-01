@@ -1,0 +1,372 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gửi Bống...</title>
+    <style>
+      /* Thiết lập màu nền lãng mạn */
+      body {
+        font-family: "Helvetica Neue", Arial, sans-serif;
+        background: linear-gradient(135deg, #ffe8ec 0%, #fbd1d9 100%);
+        color: #5a3e42;
+        line-height: 1.8;
+        margin: 0;
+        padding: 40px 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+      }
+
+      /* Khung dùng chung cho form nhập mật khẩu và bức thư */
+      .box-container {
+        background-color: #ffffff;
+        max-width: 650px;
+        width: 100%;
+        padding: 50px 60px;
+        border-radius: 15px;
+        border-top: 5px solid #ff758c;
+        box-shadow: 0 15px 35px rgba(255, 117, 140, 0.15);
+        animation: fadeIn 1.5s ease-in-out;
+        box-sizing: border-box;
+      }
+
+      /* Khung đăng nhập */
+      #login-screen {
+        text-align: center;
+      }
+
+      #login-screen h2 {
+        color: #d84a5f;
+        margin-bottom: 10px;
+      }
+
+      #login-screen .hint {
+        font-size: 14px;
+        color: #888;
+        margin-bottom: 30px;
+        font-style: italic;
+      }
+
+      /* Khung chứa 6 ô mật khẩu */
+      .otp-container {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-bottom: 25px;
+      }
+
+      .otp-input {
+        width: 45px;
+        height: 55px;
+        font-size: 24px;
+        text-align: center;
+        border: 2px solid #fbd1d9;
+        border-radius: 10px;
+        outline: none;
+        color: #5a3e42;
+        transition: border-color 0.3s;
+        background-color: #fff;
+      }
+
+      .otp-input:focus {
+        border-color: #ff758c;
+        box-shadow: 0 0 8px rgba(255, 117, 140, 0.3);
+      }
+
+      #login-screen button {
+        background-color: #ff758c;
+        color: white;
+        border: none;
+        padding: 12px 35px;
+        font-size: 16px;
+        border-radius: 25px;
+        cursor: pointer;
+        font-weight: bold;
+        transition:
+          background-color 0.3s,
+          transform 0.2s;
+      }
+
+      #login-screen button:hover {
+        background-color: #d84a5f;
+        transform: scale(1.05);
+      }
+
+      #error-msg {
+        color: #d84a5f;
+        font-size: 14px;
+        margin-top: 15px;
+        display: none;
+        animation: shake 0.4s ease-in-out;
+      }
+
+      /* Khung chứa nội dung bức thư (ẩn đi lúc đầu) */
+      #letter-content {
+        display: none;
+      }
+
+      /* Định dạng các đoạn văn */
+      p {
+        margin-bottom: 20px;
+        text-align: justify;
+        font-size: 16px;
+      }
+
+      /* Lời chào đầu thư */
+      .greeting {
+        font-size: 20px;
+        font-weight: bold;
+        color: #d84a5f;
+        margin-bottom: 30px;
+      }
+
+      /* Chữ ký cuối thư */
+      .signature {
+        text-align: right;
+        font-weight: bold;
+        font-style: italic;
+        margin-top: 50px;
+        font-size: 20px;
+        color: #d84a5f;
+      }
+
+      /* Định nghĩa hiệu ứng */
+      @keyframes fadeIn {
+        0% {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes shake {
+        0%,
+        100% {
+          transform: translateX(0);
+        }
+        25% {
+          transform: translateX(-5px);
+        }
+        50% {
+          transform: translateX(5px);
+        }
+        75% {
+          transform: translateX(-5px);
+        }
+      }
+
+      /* Tùy chỉnh cho giao diện điện thoại */
+      @media (max-width: 600px) {
+        .box-container {
+          padding: 30px 20px;
+        }
+        .otp-container {
+          gap: 5px;
+        }
+        .otp-input {
+          width: 35px;
+          height: 45px;
+          font-size: 20px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Màn hình nhập mật khẩu -->
+    <div class="box-container" id="login-screen">
+      <h2>Điền đúng mật khẩu để mở</h2>
+      <p class="hint">Gợi ý: ngày, tháng, năm sinh</p>
+
+      <div class="otp-container">
+        <input
+          type="password"
+          class="otp-input"
+          maxlength="1"
+          pattern="[0-9]*"
+          inputmode="numeric"
+        />
+        <input
+          type="password"
+          class="otp-input"
+          maxlength="1"
+          pattern="[0-9]*"
+          inputmode="numeric"
+        />
+        <input
+          type="password"
+          class="otp-input"
+          maxlength="1"
+          pattern="[0-9]*"
+          inputmode="numeric"
+        />
+        <input
+          type="password"
+          class="otp-input"
+          maxlength="1"
+          pattern="[0-9]*"
+          inputmode="numeric"
+        />
+        <input
+          type="password"
+          class="otp-input"
+          maxlength="1"
+          pattern="[0-9]*"
+          inputmode="numeric"
+        />
+        <input
+          type="password"
+          class="otp-input"
+          maxlength="1"
+          pattern="[0-9]*"
+          inputmode="numeric"
+        />
+      </div>
+
+      <button onclick="checkPassword()">Xem</button>
+      <p id="error-msg">Mật khẩu chưa đúng, thử lại nhé!</p>
+    </div>
+
+    <!-- Nội dung bức thư -->
+    <div class="box-container" id="letter-content">
+      <p class="greeting">Gửi Bống,</p>
+
+      <p>Anh đã suy nghĩ rất nhiều trước khi viết những dòng này cho em.</p>
+
+      <p>
+        Dạo gần đây mình liên tục xảy ra mâu thuẫn. Có những lúc cả hai đều nóng
+        giận, đều nói ra những lời làm đối phương tổn thương. Anh biết bản thân
+        mình cũng có những điều chưa tốt, chưa đủ tinh tế để hiểu cảm xúc của
+        em, và anh thật lòng xin lỗi vì những lúc đã làm em buồn.
+      </p>
+
+      <p>
+        Nhưng anh cũng muốn em hiểu rằng trong chuyện của mình, không phải chỉ
+        một người sai hoàn toàn. Có những lúc em nóng giận, to tiếng, thậm chí
+        đánh anh trong lúc mất kiểm soát. Anh không nhắc lại điều này để trách
+        móc hay hơn thua đúng sai, mà chỉ vì anh nghĩ cả hai mình đều đã mệt,
+        đều đang mang trong lòng quá nhiều cảm xúc tiêu cực mà chưa thật sự ngồi
+        lại để hiểu nhau.
+      </p>
+
+      <p>
+        Điều làm anh buồn nhất không phải là những lần cãi nhau, mà là việc mình
+        dần trở nên xa cách đến mức em chặn hết mọi liên lạc và nói rằng không
+        còn tình cảm nữa. Anh đã nghĩ rất nhiều về khoảng thời gian vừa qua,
+        nghĩ về những điều mình từng có, những lúc vui vẻ, những kế hoạch còn
+        dang dở, và anh thật sự không muốn mọi thứ kết thúc theo cách này.
+      </p>
+
+      <p>
+        Anh đã bật khóc rất nhiều và không kiểm soát được. Không phải vì muốn
+        làm quá mọi chuyện, mà vì anh thật sự không kiểm soát được cảm xúc của
+        mình nữa. Anh vừa nhớ em, vừa bất lực vì không thể liên lạc với em, cũng
+        không biết phải làm gì để mọi chuyện khá hơn. Có lúc anh chỉ ngồi nhìn
+        lại những tin nhắn cũ rồi tự trách bản thân vì đã để tình cảm của mình
+        đi đến mức này.
+      </p>
+
+      <p>
+        Hôm nay là Quốc tế thiếu nhi. Anh đã từng nghĩ sẽ được ở cạnh em, đưa em
+        đi ăn, đi chơi. Nhưng cuối cùng thứ anh có thể làm chỉ là viết cho em
+        một bức thư trong lúc nhớ em rất nhiều.
+      </p>
+
+      <p>
+        Dạo này anh cũng đang ôn cho 2 kỳ thi quan trọng. Anh không thể tập
+        trung vì buồn chuyến của mình, áp lực khiến anh mệt hơn anh tưởng, và
+        càng trong những lúc như vậy anh càng nhận ra em từng là chỗ dựa tinh
+        thần lớn với anh như thế nào. Chỉ cần có em bên cạnh, nói chuyện với anh
+        bình thường thôi, anh cũng đã có thêm động lực rất nhiều.
+      </p>
+
+      <p>
+        Anh viết những điều này không phải để níu kéo bằng sự thương hại hay ép
+        em phải quay lại ngay. Anh chỉ muốn nói rằng anh vẫn còn tình cảm với
+        em, vẫn muốn cả hai có thể bình tĩnh lại để nhìn nhận mọi chuyện theo
+        cách trưởng thành hơn. Anh cũng sẽ cố gắng thay đổi những điều chưa tốt
+        ở bản thân, học cách lắng nghe và kiểm soát cảm xúc tốt hơn để nếu còn
+        cơ hội đi tiếp, mình sẽ không làm đau nhau thêm nữa.
+      </p>
+
+      <p>
+        Anh không cần một ai hoàn hảo, và anh cũng biết bản thân mình không hoàn
+        hảo. Nhưng sau tất cả, anh vẫn mong người đồng hành cùng mình sẽ là em.
+        Hãy gọi cho anh nhé, anh rất cần em lúc này.
+      </p>
+
+      <div class="signature">Chíp</div>
+    </div>
+
+    <!-- Script xử lý logic mật khẩu 6 ô -->
+    <script>
+      const inputs = document.querySelectorAll(".otp-input");
+      const errorMsg = document.getElementById("error-msg");
+
+      // Xử lý sự kiện gõ phím cho từng ô
+      inputs.forEach((input, index) => {
+        input.addEventListener("input", (e) => {
+          // Đảm bảo chỉ nhập 1 số
+          if (input.value.length > 1) {
+            input.value = input.value.slice(0, 1);
+          }
+
+          // Ẩn lỗi nếu đang gõ lại
+          errorMsg.style.display = "none";
+
+          // Tự động chuyển sang ô tiếp theo nếu đã nhập
+          if (input.value !== "" && index < inputs.length - 1) {
+            inputs[index + 1].focus();
+          }
+        });
+
+        input.addEventListener("keydown", (e) => {
+          // Xử lý phím Backspace để lùi lại ô trước đó
+          if (e.key === "Backspace" && input.value === "" && index > 0) {
+            inputs[index - 1].focus();
+          }
+          // Xử lý phím Enter
+          if (e.key === "Enter") {
+            checkPassword();
+          }
+        });
+      });
+
+      function checkPassword() {
+        let password = "";
+        inputs.forEach((input) => {
+          password += input.value;
+        });
+
+        var loginScreen = document.getElementById("login-screen");
+        var letterContent = document.getElementById("letter-content");
+
+        if (password === "050805") {
+          // Ẩn màn hình đăng nhập và hiện bức thư
+          loginScreen.style.display = "none";
+          letterContent.style.display = "block";
+
+          // Kích hoạt lại hiệu ứng fadeIn cho bức thư
+          letterContent.style.animation = "none";
+          setTimeout(function () {
+            letterContent.style.animation = "fadeIn 1.5s ease-in-out";
+          }, 10);
+        } else {
+          // Hiện thông báo lỗi và tạo hiệu ứng rung
+          errorMsg.style.display = "block";
+          errorMsg.style.animation = "none";
+          errorMsg.offsetHeight; /* Trigger reflow */
+          errorMsg.style.animation = null;
+
+          // Xóa trống các ô để nhập lại và focus vào ô đầu tiên
+          inputs.forEach((input) => (input.value = ""));
+          inputs[0].focus();
+        }
+      }
+    </script>
+  </body>
+</html>
